@@ -1,0 +1,1159 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" 
+"http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd" > 
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>An introduction to sounddevice</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (https://tug.org/tex4ht/)" /> 
+<meta name="originator" content="TeX4ht (https://tug.org/tex4ht/)" /> 
+<!-- xhtml,mathml,html --> 
+<meta name="src" content="index.tex" /> 
+<link rel="stylesheet" type="text/css" href="index.css" /> 
+</head><body 
+>
+   <div class="maketitle">
+                                                                  
+
+                                                                  
+                                                                  
+
+                                                                  
+
+<h2 class="titleHead">An introduction to sounddevice</h2>
+ <div class="author" ><a 
+href="https://cms.ual.es/UAL/personas/persona.htm?id=515256515553484875" ><span 
+class="ecrm-1200">Vicente Gonz</span><span 
+class="ecrm-1200">&#x00E1;</span><span 
+class="ecrm-1200">lez Ruiz</span></a> <span 
+class="ecrm-1200">- </span><a 
+href="https://cms.ual.es/UAL/universidad/departamentos/informatica/index.htm" ><span 
+class="ecrm-1200">Depto Inform</span><span 
+class="ecrm-1200">&#x00E1;</span><span 
+class="ecrm-1200">tica</span></a> <span 
+class="ecrm-1200">- </span><a 
+href="https://www.ual.es" ><span 
+class="ecrm-1200">UAL</span></a></div><br />
+<div class="date" ><span 
+class="ecrm-1200">March 14, 2022</span></div>
+   </div>
+<!--l. 5--><p class="indent" >   <a 
+href="https://python-sounddevice.readthedocs.io" >sounddevice</a> is a Python <a 
+href="https://docs.python.org/3/tutorial/modules.html" >module</a> that provides bindings for the <a 
+href="http://www.portaudio.com/" >PortAudio
+library</a>&#x00A0;<span class="cite">&#x005B;<span 
+class="ecbx-1000">?</span>&#x005D;</span>.
+</p><!--l. 11--><p class="indent" >   Let&#x2019;s see some examples of what sounddevice can do:
+</p>
+   <h4 class="likesubsectionHead"><a 
+ id="x1-1000"></a>Wiring the ADC and the DAC using a loop</h4>
+   <!--l. 14--><div class="lstinputlisting">
+<a 
+ id="x1-1001"></a>
+   <span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-1002r1"></a></span><span 
+class="ecit-1000">#</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">The</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">same</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">as</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">wire3</span><span 
+class="ecit-1000">.</span><span 
+class="ecit-1000">py</span><span 
+class="ecit-1000">,</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">but</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">using</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">NumPy</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">arrays</span><span 
+class="ecit-1000">.</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-1003r2"></a></span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-1004r3"></a></span><span 
+class="ectt-1000">import</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">sounddevice</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">as</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">sd</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-1005r4"></a></span><span 
+class="ectt-1000">import</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">numpy</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">as</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">np</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-1006r5"></a></span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-1007r6"></a></span><span 
+class="ectt-1000">stream</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">sd</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">Stream</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="ectt-1000">samplerate</span><span 
+class="ectt-1000">=44100,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">channels</span><span 
+class="ectt-1000">=2,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">dtype</span><span 
+class="ectt-1000">=</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">int16</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-1008r7"></a></span><span 
+class="ectt-1000">stream</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">start</span><span 
+class="ectt-1000">&#x0028;&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-1009r8"></a></span><span 
+class="ectt-1000">while</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">True</span><span 
+class="ectt-1000">:</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-1010r9"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">chunk</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">overflowed</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">stream</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">read</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="ectt-1000">stream</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">read_available</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-1011r10"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">if</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">overflowed</span><span 
+class="ectt-1000">:</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-1012r11"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">print</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">Overflow</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-1013r12"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">stream</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">write</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="ectt-1000">chunk</span><span 
+class="ectt-1000">&#x0029;</span>
+   
+   </div>
+<!--l. 16--><p class="noindent" >
+</p>
+   <h4 class="likesubsectionHead"><a 
+ id="x1-2000"></a>Wiring the ADC and the DAC using an interruption handler</h4>
+   <!--l. 17--><div class="lstinputlisting">
+<a 
+ id="x1-2001"></a>
+   <span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2002r1"></a></span><span 
+class="ecit-1000">#</span><span 
+class="ecit-1000">!/</span><span 
+class="ecit-1000">usr</span><span 
+class="ecit-1000">/</span><span 
+class="ecit-1000">bin</span><span 
+class="ecit-1000">/</span><span 
+class="ecit-1000">env</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">python3</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2003r2"></a></span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2004r3"></a></span><span 
+class="ecit-1000">#</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">https</span><span 
+class="ecit-1000">://</span><span 
+class="ecit-1000">python</span><span 
+class="ecit-1000">-</span><span 
+class="ecit-1000">sounddevice</span><span 
+class="ecit-1000">.</span><span 
+class="ecit-1000">readthedocs</span><span 
+class="ecit-1000">.</span><span 
+class="ecit-1000">io</span><span 
+class="ecit-1000">/</span><span 
+class="ecit-1000">en</span><span 
+class="ecit-1000">/0.3.13/</span><span 
+class="ecit-1000">_downloads</span><span 
+class="ecit-1000">/</span><span 
+class="ecit-1000">wire</span><span 
+class="ecit-1000">.</span><span 
+class="ecit-1000">py</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2005r4"></a></span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2006r5"></a></span><span 
+class="ecit-1000">&#x0022;&#x0022;&#x0022;</span><span 
+class="ecit-1000">Pass</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">input</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">directly</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">to</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">output</span><span 
+class="ecit-1000">.</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2007r6"></a></span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2008r7"></a></span><span 
+class="ecit-1000">See</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">https</span><span 
+class="ecit-1000">://</span><span 
+class="ecit-1000">www</span><span 
+class="ecit-1000">.</span><span 
+class="ecit-1000">assembla</span><span 
+class="ecit-1000">.</span><span 
+class="ecit-1000">com</span><span 
+class="ecit-1000">/</span><span 
+class="ecit-1000">spaces</span><span 
+class="ecit-1000">/</span><span 
+class="ecit-1000">portaudio</span><span 
+class="ecit-1000">/</span><span 
+class="ecit-1000">subversion</span><span 
+class="ecit-1000">/</span><span 
+class="ecit-1000">source</span><span 
+class="ecit-1000">/</span><span 
+class="ecit-1000">HEAD</span><span 
+class="ecit-1000">/</span><span 
+class="ecit-1000">portaudio</span><span 
+class="ecit-1000">/</span><span 
+class="ecit-1000">trunk</span><span 
+class="ecit-1000">/</span><span 
+class="ecit-1000">test</span><span 
+class="ecit-1000">/</span><span 
+class="ecit-1000">patest_wire</span><span 
+class="ecit-1000">.</span><span 
+class="ecit-1000">c</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2009r8"></a></span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2010r9"></a></span><span 
+class="ecit-1000">&#x0022;&#x0022;&#x0022;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2011r10"></a></span><span 
+class="ectt-1000">import</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">argparse</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2012r11"></a></span><span 
+class="ectt-1000">import</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">logging</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2013r12"></a></span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2014r13"></a></span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2015r14"></a></span><span 
+class="ectt-1000">def</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">int_or_str</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="ectt-1000">text</span><span 
+class="ectt-1000">&#x0029;:</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2016r15"></a></span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">&#x0022;&#x0022;&#x0022;</span><span 
+class="ecit-1000">Helper</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">function</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">for</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">argument</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">parsing</span><span 
+class="ecit-1000">.</span><span 
+class="ecit-1000">&#x0022;&#x0022;&#x0022;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2017r16"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">try</span><span 
+class="ectt-1000">:</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2018r17"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">return</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">int</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="ectt-1000">text</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2019r18"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">except</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">ValueError</span><span 
+class="ectt-1000">:</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2020r19"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">return</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">text</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2021r20"></a></span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2022r21"></a></span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2023r22"></a></span><span 
+class="ectt-1000">parser</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">argparse</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">ArgumentParser</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="ectt-1000">description</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">__doc__</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2024r23"></a></span><span 
+class="ectt-1000">parser</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">add_argument</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">-</span><span 
+class="ectt-1000">i</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">--</span><span 
+class="ectt-1000">input</span><span 
+class="ectt-1000">-</span><span 
+class="ectt-1000">device</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">type</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">int_or_str</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2025r24"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">help</span><span 
+class="ectt-1000">=</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">input</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">device</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">ID</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">or</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">substring</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2026r25"></a></span><span 
+class="ectt-1000">parser</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">add_argument</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">-</span><span 
+class="ectt-1000">o</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">--</span><span 
+class="ectt-1000">output</span><span 
+class="ectt-1000">-</span><span 
+class="ectt-1000">device</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">type</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">int_or_str</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2027r26"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">help</span><span 
+class="ectt-1000">=</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">output</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">device</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">ID</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">or</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">substring</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2028r27"></a></span><span 
+class="ectt-1000">parser</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">add_argument</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">-</span><span 
+class="ectt-1000">c</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">--</span><span 
+class="ectt-1000">channels</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">type</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">int</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">default</span><span 
+class="ectt-1000">=2,</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2029r28"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">help</span><span 
+class="ectt-1000">=</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">number</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">of</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">channels</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2030r29"></a></span><span 
+class="ectt-1000">parser</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">add_argument</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">-</span><span 
+class="ectt-1000">t</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">--</span><span 
+class="ectt-1000">dtype</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">help</span><span 
+class="ectt-1000">=</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">audio</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">data</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">type</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2031r30"></a></span><span 
+class="ectt-1000">parser</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">add_argument</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">-</span><span 
+class="ectt-1000">s</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">--</span><span 
+class="ectt-1000">samplerate</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">type</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">float</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">help</span><span 
+class="ectt-1000">=</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">sampling</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">rate</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2032r31"></a></span><span 
+class="ectt-1000">parser</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">add_argument</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">-</span><span 
+class="ectt-1000">b</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">--</span><span 
+class="ectt-1000">blocksize</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">type</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">int</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">help</span><span 
+class="ectt-1000">=</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">block</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">size</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2033r32"></a></span><span 
+class="ectt-1000">parser</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">add_argument</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">-</span><span 
+class="ectt-1000">l</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">--</span><span 
+class="ectt-1000">latency</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">type</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">float</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">help</span><span 
+class="ectt-1000">=</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">latency</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">in</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">seconds</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2034r33"></a></span><span 
+class="ectt-1000">args</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">parser</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">parse_args</span><span 
+class="ectt-1000">&#x0028;&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2035r34"></a></span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2036r35"></a></span><span 
+class="ectt-1000">try</span><span 
+class="ectt-1000">:</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2037r36"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">import</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">sounddevice</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">as</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">sd</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2038r37"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">import</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">numpy</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">#</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">Make</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">sure</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">NumPy</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">is</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">loaded</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">before</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">it</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">is</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">used</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">in</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">the</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">callback</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2039r38"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">assert</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">numpy</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">#</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">avoid</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">&#x0022;</span><span 
+class="ecit-1000">imported</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">but</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">unused</span><span 
+class="ecit-1000">&#x0022;</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">message</span><span 
+class="ecit-1000">&#x00A0;</span><span 
+class="ecit-1000">&#x0028;</span><span 
+class="ecit-1000">W0611</span><span 
+class="ecit-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2040r39"></a></span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2041r40"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">def</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">callback</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="ectt-1000">indata</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">outdata</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">frames</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">time</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">status</span><span 
+class="ectt-1000">&#x0029;:</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2042r41"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">if</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">status</span><span 
+class="ectt-1000">:</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2043r42"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">print</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="ectt-1000">status</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2044r43"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">outdata</span><span 
+class="ectt-1000">&#x005B;:&#x005D;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">indata</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2045r44"></a></span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2046r45"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">print</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">blocksize</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">&#x0022;</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">args</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">blocksize</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2047r46"></a></span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2048r47"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">with</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">sd</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">Stream</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="ectt-1000">device</span><span 
+class="ectt-1000">=&#x0028;</span><span 
+class="ectt-1000">args</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">input_device</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">args</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">output_device</span><span 
+class="ectt-1000">&#x0029;,</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2049r48"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">samplerate</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">args</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">samplerate</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">blocksize</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">args</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">blocksize</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2050r49"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">dtype</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">args</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">dtype</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">latency</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">args</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">latency</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2051r50"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">channels</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">args</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">channels</span><span 
+class="ectt-1000">,</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">callback</span><span 
+class="ectt-1000">=</span><span 
+class="ectt-1000">callback</span><span 
+class="ectt-1000">&#x0029;:</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2052r51"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">print</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">#</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">*</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">80&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2053r52"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">print</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">press</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">Return</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">to</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">quit</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2054r53"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">print</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">#</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">*</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">80&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2055r54"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">input</span><span 
+class="ectt-1000">&#x0028;&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2056r55"></a></span><span 
+class="ectt-1000">except</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">KeyboardInterrupt</span><span 
+class="ectt-1000">:</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2057r56"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">parser</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">exit</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">&#x005C;</span><span 
+class="ectt-1000">nInterrupted</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">by</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">user</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">&#x0029;</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2058r57"></a></span><span 
+class="ectt-1000">except</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">Exception</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">as</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">e</span><span 
+class="ectt-1000">:</span><span 
+class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
+ id="x1-2059r58"></a></span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">parser</span><span 
+class="ectt-1000">.</span><span 
+class="ectt-1000">exit</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="ectt-1000">type</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="ectt-1000">e</span><span 
+class="ectt-1000">&#x0029;.</span><span 
+class="ectt-1000">__name__</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">+</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">:</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="tctt-1000">&#x0027;</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">+</span><span 
+class="ectt-1000">&#x00A0;</span><span 
+class="ectt-1000">str</span><span 
+class="ectt-1000">&#x0028;</span><span 
+class="ectt-1000">e</span><span 
+class="ectt-1000">&#x0029;&#x0029;</span>
+   
+   </div>
+                                                                  
+
+                                                                  
+<!--l. 19--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
+ id="x1-30001"></a>Resources</h3>
+<a 
+ id="Q1-1-6"></a>
+    
+</body></html> 
+
+                                                                  
+
+

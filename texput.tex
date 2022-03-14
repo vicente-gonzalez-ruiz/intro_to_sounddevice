@@ -1,0 +1,21 @@
+\title{An introduction to sounddevice}
+
+\maketitle
+
+\href{https://python-sounddevice.readthedocs.io}{sounddevice} is a
+Python \href{https://docs.python.org/3/tutorial/modules.html}{module}
+that provides bindings for the
+\href{http://www.portaudio.com/}{PortAudio
+  library}~\cite{sounddevice}.
+
+Let's see some examples of what sounddevice can do:
+
+\subsection*{Wiring the ADC and the DAC using a loop}
+\lstinputlisting[language=Python]{/home/vruiz/intercom/test/sounddevice/wire5.py}
+
+\subsection*{Wiring the ADC and the DAC using an interruption handler}
+\lstinputlisting[language=Python]{/home/vruiz/intercom/test/sounddevice/wire.py}
+
+\section{Resources}
+
+\bibliography{sound}
