@@ -1,18 +1,15 @@
-<?xml version="1.0" encoding="iso-8859-1" ?> 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" 
-"http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd" > 
-<html xmlns="http://www.w3.org/1999/xhtml"  
-> 
-<head><title>An introduction to sounddevice</title> 
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
-<meta name="generator" content="TeX4ht (https://tug.org/tex4ht/)" /> 
-<meta name="originator" content="TeX4ht (https://tug.org/tex4ht/)" /> 
-<!-- xhtml,mathml,html --> 
-<meta name="src" content="index.tex" /> 
-<link rel="stylesheet" type="text/css" href="index.css" /> 
-</head><body 
->
-   <div class="maketitle">
+<!DOCTYPE html> 
+<html lang='en-US' xml:lang='en-US'> 
+<head> <title>An introduction to sounddevice</title> 
+<meta charset='utf-8' /> 
+<meta content='TeX4ht (https://tug.org/tex4ht/)' name='generator' /> 
+<meta content='width=device-width,initial-scale=1' name='viewport' /> 
+<link href='index.css' rel='stylesheet' type='text/css' /> 
+<meta content='index.tex' name='src' /> 
+<script>window.MathJax = { tex: { tags: "ams", }, }; </script> 
+ <script async='async' id='MathJax-script' src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js' type='text/javascript'></script>  
+</head><body>
+   <div class='maketitle'>
                                                                   
 
                                                                   
@@ -20,1775 +17,266 @@
 
                                                                   
 
-<h2 class="titleHead">An introduction to sounddevice</h2>
- <div class="author" ><a 
-href="https://cms.ual.es/UAL/personas/persona.htm?id=515256515553484875" ><span 
-class="ecrm-1200">Vicente Gonz</span><span 
-class="ecrm-1200">&#x00E1;</span><span 
-class="ecrm-1200">lez Ruiz</span></a> <span 
-class="ecrm-1200">- </span><a 
-href="https://cms.ual.es/UAL/universidad/departamentos/informatica/index.htm" ><span 
-class="ecrm-1200">Depto Inform</span><span 
-class="ecrm-1200">&#x00E1;</span><span 
-class="ecrm-1200">tica</span></a> <span 
-class="ecrm-1200">- </span><a 
-href="https://www.ual.es" ><span 
-class="ecrm-1200">UAL</span></a></div><br />
-<div class="date" ><span 
-class="ecrm-1200">March 15, 2022</span></div>
+<h2 class='titleHead'>An introduction to sounddevice</h2>
+ <div class='author'><a href='https://cms.ual.es/UAL/personas/persona.htm?id=515256515553484875'><span class='ecrm-1200'>Vicente González Ruiz</span></a> <span class='ecrm-1200'>- </span><a href='https://cms.ual.es/UAL/universidad/departamentos/informatica/index.htm'><span class='ecrm-1200'>Depto Informática</span></a> <span class='ecrm-1200'>- </span><a href='https://www.ual.es'><span class='ecrm-1200'>UAL</span></a></div><br />
+<div class='date'><span class='ecrm-1200'>September 14, 2022</span></div>
    </div>
-<!--l. 5--><p class="indent" >   <a 
-href="https://python-sounddevice.readthedocs.io" >sounddevice</a> is a Python <a 
-href="https://docs.python.org/3/tutorial/modules.html" >module</a> that provides bindings for the <a 
-href="http://www.portaudio.com/" >PortAudio
-library</a>&#x00A0;<span class="cite">&#x005B;<a 
-href="#Xsounddevice">1</a>&#x005D;</span>.
-</p><!--l. 11--><p class="indent" >   Let&#x2019;s see some examples of what sounddevice can do:
+<!-- l. 5 --><p class='indent'>   <a href='https://python-sounddevice.readthedocs.io'>sounddevice</a> is a Python <a href='https://docs.python.org/3/tutorial/modules.html'>module</a> that provides bindings for the <a href='http://www.portaudio.com/'>PortAudio
+library</a> <span class='cite'>[<a href='#Xsounddevice'>1</a>]</span>.
+</p><!-- l. 11 --><p class='indent'>   Let’s see some examples of what sounddevice can do:
 </p>
-   <h4 class="likesubsectionHead"><a 
- id="x1-1000"></a>Wiring the ADC and the DAC using a loop</h4>
-   <!--l. 14--><div class="lstinputlisting">
-<a 
- id="x1-1001"></a>
-   <span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-1002r1"></a></span><span 
-class="ecit-1000">#</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">The</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">same</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">as</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">wire3</span><span 
-class="ecit-1000">.</span><span 
-class="ecit-1000">py</span><span 
-class="ecit-1000">,</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">but</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">using</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">NumPy</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">arrays</span><span 
-class="ecit-1000">.</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-1003r2"></a></span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-1004r3"></a></span><span 
-class="ectt-1000">import</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">sounddevice</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">as</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">sd</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-1005r4"></a></span><span 
-class="ectt-1000">import</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">numpy</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">as</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">np</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-1006r5"></a></span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-1007r6"></a></span><span 
-class="ectt-1000">stream</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">sd</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">Stream</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">samplerate</span><span 
-class="ectt-1000">=44100,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">channels</span><span 
-class="ectt-1000">=2,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">dtype</span><span 
-class="ectt-1000">=</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">int16</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-1008r7"></a></span><span 
-class="ectt-1000">stream</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">start</span><span 
-class="ectt-1000">&#x0028;&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-1009r8"></a></span><span 
-class="ectt-1000">while</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">True</span><span 
-class="ectt-1000">:</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-1010r9"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">chunk</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">overflowed</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">stream</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">read</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">stream</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">read_available</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-1011r10"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">if</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">overflowed</span><span 
-class="ectt-1000">:</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-1012r11"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">print</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">&#x0022;</span><span 
-class="ectt-1000">Overflow</span><span 
-class="ectt-1000">&#x0022;</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-1013r12"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">stream</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">write</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">chunk</span><span 
-class="ectt-1000">&#x0029;</span>
+   <h4 class='likesubsectionHead'><a id='x1-1000'></a>Wiring the ADC and the DAC using a loop</h4>
+   <!-- l. 14 --><div class='lstinputlisting'>
+<a id='x1-1001'></a>
+   <span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1002r1'></a></span><span style='color:#000000'><span class='ecit-1000'>#</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>The</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>same</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>as</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>wire3</span></span><span style='color:#000000'><span class='ecit-1000'>.</span></span><span style='color:#000000'><span class='ecit-1000'>py</span></span><span style='color:#000000'><span class='ecit-1000'>,</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>but</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>using</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>NumPy</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>arrays</span></span><span style='color:#000000'><span class='ecit-1000'>.</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1003r2'></a></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1004r3'></a></span><span style='color:#000000'><span class='ectt-1000'>import</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>sounddevice</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>as</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>sd</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1005r4'></a></span><span style='color:#000000'><span class='ectt-1000'>import</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>numpy</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>as</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>np</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1006r5'></a></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1007r6'></a></span><span style='color:#000000'><span class='ectt-1000'>stream</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>sd</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>Stream</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>samplerate</span></span><span style='color:#000000'><span class='ectt-1000'>=44100,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>channels</span></span><span style='color:#000000'><span class='ectt-1000'>=2,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>dtype</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>int16</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1008r7'></a></span><span style='color:#000000'><span class='ectt-1000'>stream</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>start</span></span><span style='color:#000000'><span class='ectt-1000'>()</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1009r8'></a></span><span style='color:#000000'><span class='ectt-1000'>while</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>True</span></span><span style='color:#000000'><span class='ectt-1000'>:</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1010r9'></a></span><span class='ectt-1000'>    </span><span style='color:#000000'><span class='ectt-1000'>chunk</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>overflowed</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>stream</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>read</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>stream</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>read_available</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1011r10'></a></span><span class='ectt-1000'>    </span><span style='color:#000000'><span class='ectt-1000'>if</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>overflowed</span></span><span style='color:#000000'><span class='ectt-1000'>:</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1012r11'></a></span><span class='ectt-1000'>        </span><span style='color:#000000'><span class='ectt-1000'>print</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>"</span></span><span style='color:#000000'><span class='ectt-1000'>Overflow</span></span><span style='color:#000000'><span class='ectt-1000'>"</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1013r12'></a></span><span class='ectt-1000'>    </span><span style='color:#000000'><span class='ectt-1000'>stream</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>write</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>chunk</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span>
    
    </div>
-<!--l. 16--><p class="indent" >   This module implements the algorithm:
+<!-- l. 16 --><p class='indent'>   This module implements the algorithm:
 </p>
-   <!--l. 18-->
-   <div class="lstlisting" id="listing-1"><span class="label"><a 
- id="x1-1014r1"></a></span><span 
-class="ectt-1000">while</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">True</span><span 
-class="ectt-1000">:</span><span 
-class="ectt-1000">&#x00A0;</span><br /> 
-<span class="label"><a 
- id="x1-1015r2"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">chunk</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">sound_card</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">read</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">chunk_size</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">1024&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">#</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">&#x0028;1&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /> 
-<span class="label"><a 
- id="x1-1016r3"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">sound_card</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">write</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">chunk</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">#</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">&#x0028;2&#x0029;</span></div>
+   <!-- l. 18 -->
+   <div class='lstlisting' id='listing-1'><span class='label'><a id='x1-1014r1'></a></span><span style='color:#000000'><span class='ectt-1000'>while</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>True</span></span><span style='color:#000000'><span class='ectt-1000'>:</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1015r2'></a></span><span class='ectt-1000'>  </span><span style='color:#000000'><span class='ectt-1000'>chunk</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>sound_card</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>read</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>chunk_size</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>1024)</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span class='ecit-1000'> </span><span style='color:#000000'><span class='ecit-1000'>#</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>(1)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1016r3'></a></span><span class='ectt-1000'>  </span><span style='color:#000000'><span class='ectt-1000'>sound_card</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>write</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>chunk</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span class='ecit-1000'> </span><span style='color:#000000'><span class='ecit-1000'>#</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>(2)</span></span></div>
    
-<!--l. 35--><p class="indent" >   where <span 
-class="ectt-1000">&#x0028;1&#x0029; </span>captures 1024 <a 
-href="https://python-sounddevice.readthedocs.io/en/0.3.12/api.html" >frames</a> from the ADC, and <span 
-class="ectt-1000">&#x0028;2&#x0029; </span>plays the chunk of
-frames. In <span 
-class="ectt-1000">sounddevice </span>a frame is a collection of one or more samples &#x0028;typically, a
+<!-- l. 35 --><p class='indent'>   where <span class='ectt-1000'>(1) </span>captures 1024 <a href='https://python-sounddevice.readthedocs.io/en/0.3.12/api.html'>frames</a> from the ADC, and <span class='ectt-1000'>(2) </span>plays the chunk of
+frames. In <span class='ectt-1000'>sounddevice </span>a frame is a collection of one or more samples (typically, a
 frame is a single sample if the number of channels is 1, or two samples if the number
-of channels is 2&#x0029;.
-</p><!--l. 42--><p class="indent" >   If you want to run this module right now and you are not using a <a 
-href="https://en.wikipedia.org/wiki/Headset_(audio)" >headset</a>, check
-&#xFB01;rst that the output volumen of your <a 
-href="https://en.wikipedia.org/wiki/Headset_(audio)" >speakers</a> is not too high, otherwise you could
-involuntary <a 
-href="https://www.youtube.com/watch?v=rI90lhYAffo" >&#x201C;couple&#x201D;</a> the speaker and the <a 
-href="https://en.wikipedia.org/wiki/Microphone" >mic&#x0028;rophone&#x0029;</a> of your computer, producing a
-loud and annoying <a 
-href="https://www.cirrusresearch.co.uk/blog/2012/03/tonal-noise-analysis-with-the-optimus-green-sound-level-meters/" >tonal sound</a>. In order to mitigate this e&#xFB00;ect, you can also control
-the gain of your mic &#x0028;if the gain is 0, no feedback between the speaker and the mic
-will be possible&#x0029;. In Xubuntu, these controls are available through clicking in the
+of channels is 2).
+</p><!-- l. 42 --><p class='indent'>   If you want to run this module right now and you are not using a <a href='https://en.wikipedia.org/wiki/Headset_(audio)'>headset</a>, check
+first that the output volumen of your <a href='https://en.wikipedia.org/wiki/Headset_(audio)'>speakers</a> is not too high, otherwise you could
+involuntary <a href='https://www.youtube.com/watch?v=rI90lhYAffo'>“couple”</a> the speaker and the <a href='https://en.wikipedia.org/wiki/Microphone'>mic(rophone)</a> of your computer, producing a
+loud and annoying <a href='https://www.cirrusresearch.co.uk/blog/2012/03/tonal-noise-analysis-with-the-optimus-green-sound-level-meters/'>tonal sound</a>. In order to mitigate this effect, you can also control
+the gain of your mic (if the gain is 0, no feedback between the speaker and the mic
+will be possible). In Xubuntu, these controls are available through clicking in the
                                                                   
 
                                                                   
-speaker icon &#x0028;situated in the top-right corner of your screen&#x0029; of the Xfce window
+speaker icon (situated in the top-right corner of your screen) of the Xfce window
 manager.
-</p><!--l. 58--><p class="indent" >   To run the module:
+</p><!-- l. 58 --><p class='indent'>   To run the module:
 </p>
-   <!--l. 60-->
-   <div class="lstlisting" id="listing-2"><span class="label"><a 
- id="x1-1017r1"></a></span><span 
-class="ectt-1000">python</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">wire5</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">py</span></div>
+   <!-- l. 60 -->
+   <div class='lstlisting' id='listing-2'><span class='label'><a id='x1-1017r1'></a></span><span style='color:#000000'><span class='ectt-1000'>python</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>wire5</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>py</span></span></div>
    
-<!--l. 64--><p class="indent" >   Stop &#x0028;killing&#x0029; the module by clicking the CTRL- and c-keys &#x0028;CTRL+c&#x0029;,
+<!-- l. 64 --><p class='indent'>   Stop (killing) the module by clicking the CTRL- and c-keys (CTRL+c),
 simultaneously.
-</p><!--l. 67--><p class="indent" >   The chunk size introduces some latency. If we want to measure it:
-</p><!--l. 69--><p class="indent" >
-     </p><ol  class="enumerate1" >
-<li 
-  class="enumerate" id="x1-1019x1">
-     <!--l. 70--><p class="noindent" >First, we need the tools: <a 
-href="http://sox.sourceforge.net/" >SoX</a>, <a 
-href="https://www.audacityteam.org/" >Audacity</a>, and <a 
-href="https://raw.githubusercontent.com/Tecnologias-multimedia/intercom/master/test/sounddevice/plot_input.py" >plot_input.py</a>:
+</p><!-- l. 67 --><p class='indent'>   The chunk size introduces some latency. If we want to measure it:
+</p><!-- l. 69 --><p class='indent'>
+     </p><ol class='enumerate1'>
+<li class='enumerate' id='x1-1019x1'>
+     <!-- l. 70 --><p class='noindent'>First, we need the tools: <a href='http://sox.sourceforge.net/'>SoX</a>, <a href='https://www.audacityteam.org/'>Audacity</a>, and <a href='https://raw.githubusercontent.com/Tecnologias-multimedia/intercom/master/test/sounddevice/plot_input.py'>plot_input.py</a>:
 </p>
-     <!--l. 75-->
-     <div class="lstlisting" id="listing-3"><span class="label"><a 
- id="x1-1020r1"></a></span><span 
-class="ectt-1000">sudo</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">apt</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">install</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">sox</span><span 
-class="ectt-1000">&#x00A0;</span><br /> 
-<span class="label"><a 
- id="x1-1021r2"></a></span><span 
-class="ectt-1000">sudo</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">apt</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">install</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">audacity</span><span 
-class="ectt-1000">&#x00A0;</span><br /> 
-<span class="label"><a 
- id="x1-1022r3"></a></span><span 
-class="ectt-1000">sudo</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">apt</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">install</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">curl</span><span 
-class="ectt-1000">&#x00A0;</span><br /> 
-<span class="label"><a 
- id="x1-1023r4"></a></span><span 
-class="ectt-1000">curl</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">https</span><span 
-class="ectt-1000">://</span><span 
-class="ectt-1000">raw</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">githubusercontent</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">com</span><span 
-class="ectt-1000">/</span><span 
-class="ectt-1000">Tecnologias</span><span 
-class="ectt-1000">-</span><span 
-class="ectt-1000">multimedia</span><span 
-class="ectt-1000">/</span><span 
-class="ectt-1000">intercom</span><span 
-class="ectt-1000">/</span><span 
-class="ectt-1000">master</span><span 
-class="ectt-1000">/</span><span 
-class="ectt-1000">test</span><span 
-class="ectt-1000">/</span><span 
-class="ectt-1000">sounddevice</span><span 
-class="ectt-1000">/</span><span 
-class="ectt-1000">plot_input</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">py</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x003E;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">plot_input</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">py</span></div>
+     <!-- l. 75 -->
+     <div class='lstlisting' id='listing-3'><span class='label'><a id='x1-1020r1'></a></span><span style='color:#000000'><span class='ectt-1000'>sudo</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>apt</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>install</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>sox</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1021r2'></a></span><span style='color:#000000'><span class='ectt-1000'>sudo</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>apt</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>install</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>audacity</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1022r3'></a></span><span style='color:#000000'><span class='ectt-1000'>sudo</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>apt</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>install</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>curl</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1023r4'></a></span><span style='color:#000000'><span class='ectt-1000'>curl</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>https</span></span><span style='color:#000000'><span class='ectt-1000'>://</span></span><span style='color:#000000'><span class='ectt-1000'>raw</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>githubusercontent</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>com</span></span><span style='color:#000000'><span class='ectt-1000'>/</span></span><span style='color:#000000'><span class='ectt-1000'>Tecnologias</span></span><span style='color:#000000'><span class='ectt-1000'>-</span></span><span style='color:#000000'><span class='ectt-1000'>multimedia</span></span><span style='color:#000000'><span class='ectt-1000'>/</span></span><span style='color:#000000'><span class='ectt-1000'>intercom</span></span><span style='color:#000000'><span class='ectt-1000'>/</span></span><span style='color:#000000'><span class='ectt-1000'>master</span></span><span style='color:#000000'><span class='ectt-1000'>/</span></span><span style='color:#000000'><span class='ectt-1000'>test</span></span><span style='color:#000000'><span class='ectt-1000'>/</span></span><span style='color:#000000'><span class='ectt-1000'>sounddevice</span></span><span style='color:#000000'><span class='ectt-1000'>/</span></span><span style='color:#000000'><span class='ectt-1000'>plot_input</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>py</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>&gt;</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>plot_input</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>py</span></span></div>
      
      </li>
-<li 
-  class="enumerate" id="x1-1025x2">
-     <!--l. 82--><p class="noindent" >Run:
+<li class='enumerate' id='x1-1025x2'>
+     <!-- l. 82 --><p class='noindent'>Run:
 </p>
-     <!--l. 84-->
-     <div class="lstlisting" id="listing-4"><span class="label"><a 
- id="x1-1026r1"></a></span><span 
-class="ectt-1000">pip</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">install</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">matplotlib</span><span 
-class="ectt-1000">&#x00A0;</span><br /> 
-<span class="label"><a 
- id="x1-1027r2"></a></span><span 
-class="ectt-1000">python</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">plot_input</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">py</span></div>
+     <!-- l. 84 -->
+     <div class='lstlisting' id='listing-4'><span class='label'><a id='x1-1026r1'></a></span><span style='color:#000000'><span class='ectt-1000'>pip</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>install</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>matplotlib</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1027r2'></a></span><span style='color:#000000'><span class='ectt-1000'>python</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>plot_input</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>py</span></span></div>
      
-     <!--l. 89--><p class="noindent" >and check that the gain of the mic does not produce <a 
-href="https://en.wikipedia.org/wiki/Clipping_(audio)" >clipping</a> during the sound
+     <!-- l. 89 --><p class='noindent'>and check that the gain of the mic does not produce <a href='https://en.wikipedia.org/wiki/Clipping_(audio)'>clipping</a> during the sound
      recording.
      </p></li>
-<li 
-  class="enumerate" id="x1-1029x3">
-     <!--l. 93--><p class="noindent" ><a 
- id="x1-10283"></a> In a terminal, run:
+<li class='enumerate' id='x1-1029x3'>
+     <!-- l. 93 --><p class='noindent'> In a terminal, run:
 </p>
-     <!--l. 95-->
-     <div class="lstlisting" id="listing-5"><span class="label"><a 
- id="x1-1030r1"></a></span><span 
-class="ectt-1000">python</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">wire3</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">py</span></div>
+     <!-- l. 95 -->
+     <div class='lstlisting' id='listing-5'><span class='label'><a id='x1-1030r1'></a></span><span style='color:#000000'><span class='ectt-1000'>python</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>wire3</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>py</span></span></div>
      
                                                                   
 
                                                                   
-     <!--l. 99--><p class="noindent" >while you control the output volume of the speakers to produce a decaying
-     coupling noisy e&#xFB00;ect between both devices &#x0028;the speaker&#x0028;s&#x0029; and the mic&#x0029;. If your
-     desktop has not these <a 
-href="https://en.wikipedia.org/wiki/Transducer" >transducers</a>, we can use a <a 
-href="https://www.google.com/search?q=male+to+male+audio+jack+cable&client=firefox-b-d&sxsrf=ALeKk00GZUDGqiOfc0D8xkA_MIYgCuZmSA:1600270049146&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjdvsu-_u3rAhXl0eAKHS90DUoQ_AUoAXoECA0QAw&biw=4288&bih=972" >male-to-male jack audio cable</a>
+     <!-- l. 99 --><p class='noindent'>while you control the output volume of the speakers to produce a decaying
+     coupling noisy effect between both devices (the speaker(s) and the mic). If your
+     desktop has not these <a href='https://en.wikipedia.org/wiki/Transducer'>transducers</a>, we can use a <a href='https://www.google.com/search?q=male+to+male+audio+jack+cable&amp;client=firefox-b-d&amp;sxsrf=ALeKk00GZUDGqiOfc0D8xkA_MIYgCuZmSA:1600270049146&amp;source=lnms&amp;tbm=isch&amp;sa=X&amp;ved=2ahUKEwjdvsu-_u3rAhXl0eAKHS90DUoQ_AUoAXoECA0QAw&amp;biw=4288&amp;bih=972'>male-to-male jack audio cable</a>
      and connect the line-output of your soundcard to the input of your sound
      card.
      </p></li>
-<li 
-  class="enumerate" id="x1-1032x4">
-     <!--l. 108--><p class="noindent" >In a di&#xFB00;erent terminal &#x0028;keep <span 
-class="ectt-1000">python wire3.py </span>running&#x0029;, run:
+<li class='enumerate' id='x1-1032x4'>
+     <!-- l. 108 --><p class='noindent'>In a different terminal (keep <span class='ectt-1000'>python wire3.py </span>running), run:
 </p>
-     <!--l. 111-->
-     <div class="lstlisting" id="listing-6"><span class="label"><a 
- id="x1-1033r1"></a></span><span 
-class="ectt-1000">sox</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">-</span><span 
-class="ectt-1000">t</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">alsa</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">default</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">test</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">wav</span></div>
+     <!-- l. 111 -->
+     <div class='lstlisting' id='listing-6'><span class='label'><a id='x1-1033r1'></a></span><span style='color:#000000'><span class='ectt-1000'>sox</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>-</span></span><span style='color:#000000'><span class='ectt-1000'>t</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>alsa</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>default</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>test</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>wav</span></span></div>
      
-     <!--l. 115--><p class="noindent" >to save the ADC&#x2019;s output to the &#xFB01;le <span 
-class="ectt-1000">test.wav</span>.
+     <!-- l. 115 --><p class='noindent'>to save the ADC’s output to the file <span class='ectt-1000'>test.wav</span>.
      </p></li>
-<li 
-  class="enumerate" id="x1-1035x5">
-     <!--l. 117--><p class="noindent" >While <span 
-class="ectt-1000">sox </span>is recording, produce some short sound &#x0028;for example, hit your laptop
-     or your micro with one or your nails&#x0029;. Do this at least a couple of times more,
-     to be sure that you record the sound and also the feedback of such sound. It&#x2019;s
-     important the sound to be short &#x0028;a few miliseconds&#x0029; in order to visually
-     recognize it and it&#x2019;s replicas.
-     </p></li>
-<li 
-  class="enumerate" id="x1-1037x6">
-     <!--l. 124--><p class="noindent" >Stop <span 
-class="ectt-1000">sox </span>by pressing the CTRL+c &#x0028;at the same time&#x0029;. This kills <span 
-class="ectt-1000">sox</span>.
-     </p></li>
-<li 
-  class="enumerate" id="x1-1039x7">
-     <!--l. 127--><p class="noindent" >Kill <span 
-class="ectt-1000">python wire3.pt </span>with CTRL+c.
-     </p></li>
-<li 
-  class="enumerate" id="x1-1041x8">
-     <!--l. 129--><p class="noindent" >Load the sound &#xFB01;le into Audacity:
+<li class='enumerate' id='x1-1035x5'>While <span class='ectt-1000'>sox </span>is recording, produce some short sound (for example, hit your laptop
+     or your micro with one or your nails). Do this at least a couple of times more,
+     to be sure that you record the sound and also the feedback of such sound. It’s
+     important the sound to be short (a few miliseconds) in order to visually
+     recognize it and it’s replicas.
+     </li>
+<li class='enumerate' id='x1-1037x6'>Stop <span class='ectt-1000'>sox </span>by pressing the CTRL+c (at the same time). This kills <span class='ectt-1000'>sox</span>.
+     </li>
+<li class='enumerate' id='x1-1039x7'>Kill <span class='ectt-1000'>python wire3.pt </span>with CTRL+c.
+     </li>
+<li class='enumerate' id='x1-1041x8'>
+     <!-- l. 129 --><p class='noindent'>Load the sound file into Audacity:
 </p>
-     <!--l. 131-->
-     <div class="lstlisting" id="listing-7"><span class="label"><a 
- id="x1-1042r1"></a></span><span 
-class="ectt-1000">audacity</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">test</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">wav</span></div>
+     <!-- l. 131 -->
+     <div class='lstlisting' id='listing-7'><span class='label'><a id='x1-1042r1'></a></span><span style='color:#000000'><span class='ectt-1000'>audacity</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>test</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>wav</span></span></div>
      
                                                                   
 
                                                                   
      </li>
-<li 
-  class="enumerate" id="x1-1044x9">
-     <!--l. 135--><p class="noindent" >Localize the &#xFB01;rst one of your hitting-nail sounds in the <a 
-href="https://manual.audacityteam.org/man/audio_tracks.html" >audio track</a> of
+<li class='enumerate' id='x1-1044x9'>Localize the first one of your hitting-nail sounds in the <a href='https://manual.audacityteam.org/man/audio_tracks.html'>audio track</a> of
      Audacity.
-     </p></li>
-<li 
-  class="enumerate" id="x1-1046x10">
-     <!--l. 139--><p class="noindent" >Select &#x0028;using the mouse&#x0029; the region that contains your sound and a
+     </li>
+<li class='enumerate' id='x1-1046x10'>Select (using the mouse) the region that contains your sound and a
      replica.
-     </p></li>
-<li 
-  class="enumerate" id="x1-1048x11">
-     <!--l. 142--><p class="noindent" >Use the <a 
-href="https://manual.audacityteam.org/man/edit_toolbar.html#zoom_to_selection" >zoom to selection buttom</a> to zoom-in the selected area.
-     </p></li>
-<li 
-  class="enumerate" id="x1-1050x12">
-     <!--l. 146--><p class="noindent" >Measure the time between the ocurrence of the hit &#x0028;of the nail&#x0029; and the
-     recording of its &#xFB01;rst replica produced by the speaker-to-the-mic feedback. This
-     time is the real latency of your computer runing <span 
-class="ectt-1000">wire3.py</span>.
-     </p></li>
-<li 
-  class="enumerate" id="x1-1052x13">
-     <!--l. 151--><p class="noindent" >Modify the constant <!--l. 151--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mstyle mathvariant="monospace"><mi 
->C</mi><mi 
->H</mi><mi 
->U</mi><mi 
->N</mi><mi 
->K</mi><mstyle 
-class="text"><mtext  >_</mtext></mstyle><mi 
->S</mi><mi 
->I</mi><mi 
->Z</mi><mi 
->E</mi></mstyle></math>
-     in the module and repeat this process, starting at the Step <a 
-href="#x1-10283">3<!--tex4ht:ref: start_point --></a>. Create an ASCII
-     &#xFB01;le &#x0028;named <span 
-class="ectt-1000">latency_vs_chunk_size.txt</span>&#x0029; with the content &#x0028;use TAB-ulators
-     to space the columns&#x0029;:
+     </li>
+<li class='enumerate' id='x1-1048x11'>Use the <a href='https://manual.audacityteam.org/man/edit_toolbar.html#zoom_to_selection'>zoom to selection buttom</a> to zoom-in the selected area.
+     </li>
+<li class='enumerate' id='x1-1050x12'>Measure the time between the ocurrence of the hit (of the nail) and the
+     recording of its first replica produced by the speaker-to-the-mic feedback. This
+     time is the real latency of your computer runing <span class='ectt-1000'>wire3.py</span>.
+     </li>
+<li class='enumerate' id='x1-1052x13'>
+     <!-- l. 151 --><p class='noindent'>Modify the constant \(\mathtt {CHUNK\_SIZE}\) in the module and repeat this process, starting at the
+     Step <a href='#x1-1029x3'>3<!-- tex4ht:ref: start_point  --></a>. Create an ASCII file (named <span class='ectt-1000'>latency_vs_chunk_size.txt</span>) with the
+     content (use TAB-ulators to space the columns):
                                                                   
 
                                                                   
 </p>
-     <pre class="verbatim" id="verbatim-1">
-     #&#x00A0;CHUNK_SIZE&#x00A0;&#x00A0;&#x00A0;&#x00A0;real
-     32&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;...
-     64&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;...
-     128&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;...
-     256&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;...
-     512&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;...
-     1024&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;...
-     2048&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;...
-     4096&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;...
-     8192&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;...
+     <pre class='verbatim' id='verbatim-1'>
+     # CHUNK_SIZE    real
+     32              ...
+     64              ...
+     128             ...
+     256             ...
+     512             ...
+     1024            ...
+     2048            ...
+     4096            ...
+     8192            ...
 </pre>
-     <!--l. 166--><p class="nopar" > with the real &#x0028;practical&#x0029; latency.</p></li></ol>
-<!--l. 170--><p class="indent" >   At this point, we know the real latency of <span 
-class="ectt-1000">wire3.py </span>as a function of
-<!--l. 171--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mstyle mathvariant="monospace"><mi 
->C</mi><mi 
->H</mi><mi 
->U</mi><mi 
->N</mi><mi 
->K</mi><mstyle 
-class="text"><mtext  >_</mtext></mstyle><mi 
->S</mi><mi 
->I</mi><mi 
->Z</mi><mi 
->E</mi></mstyle></math>. Plot
-the &#xFB01;le <span 
-class="ectt-1000">latency_vs_chunk_size.txt </span>with:
+     <!-- l. 166 --><p class='nopar'> with the real (practical) latency.</p></li></ol>
+<!-- l. 170 --><p class='indent'>   At this point, we know the real latency of <span class='ectt-1000'>wire3.py </span>as a function of \(\mathtt {CHUNK\_SIZE}\). Plot the file
+<span class='ectt-1000'>latency_vs_chunk_size.txt </span>with:
 </p>
-   <!--l. 174-->
-   <div class="lstlisting" id="listing-8"><span class="label"><a 
- id="x1-1053r1"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">sudo</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">apt</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">install</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">gnuplot</span><span 
-class="ectt-1000">&#x00A0;</span><br /> 
-<span class="label"><a 
- id="x1-1054r2"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">echo</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x0022;</span><span 
-class="ectt-1000">set</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">terminal</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">pdf</span><span 
-class="ectt-1000">;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">set</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">output</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">latency_vs_chunk_size</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">pdf</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">set</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">xlabel</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">CHUNK</span><span 
-class="ectt-1000">&#x005C;</span><span 
-class="ectt-1000">_SIZE</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">frames</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">set</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">ylabel</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">Latency</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">seconds</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">plot</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">latency_vs_chunk_size</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">txt</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">title</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;&#x0027;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">with</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">linespoints</span><span 
-class="ectt-1000">&#x0022;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">|</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">gnuplot</span></div>
+   <!-- l. 174 -->
+   <div class='lstlisting' id='listing-8'><span class='label'><a id='x1-1053r1'></a></span><span class='ectt-1000'> </span><span style='color:#000000'><span class='ectt-1000'>sudo</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>apt</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>install</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>gnuplot</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-1054r2'></a></span><span class='ectt-1000'> </span><span style='color:#000000'><span class='ectt-1000'>echo</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>"</span></span><span style='color:#000000'><span class='ectt-1000'>set</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>terminal</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>pdf</span></span><span style='color:#000000'><span class='ectt-1000'>;</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>set</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>output</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>latency_vs_chunk_size</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>pdf</span></span><span style='color:#000000'><span class='tctt-1000'>'</span><span class='ectt-1000'>;</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>set</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>xlabel</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>CHUNK</span></span><span style='color:#000000'><span class='ectt-1000'>\</span></span><span style='color:#000000'><span class='ectt-1000'>_SIZE</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>frames</span></span><span style='color:#000000'><span class='ectt-1000'>)</span><span class='tctt-1000'>'</span><span class='ectt-1000'>;</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>set</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>ylabel</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>Latency</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>seconds</span></span><span style='color:#000000'><span class='ectt-1000'>)</span><span class='tctt-1000'>'</span><span class='ectt-1000'>;</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>plot</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>latency_vs_chunk_size</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>txt</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>title</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>''</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>with</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>linespoints</span></span><span style='color:#000000'><span class='ectt-1000'>"</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>|</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>gnuplot</span></span></div>
    
-<!--l. 179--><p class="indent" >   Let&#x2019;s compute now the bu&#xFB00;ering latency of a chunk &#x0028;the chunk-time&#x0029;. If
-<!--l. 180--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mstyle mathvariant="monospace"><mi 
->s</mi><mi 
->a</mi><mi 
->m</mi><mi 
->p</mi><mi 
->l</mi><mi 
->i</mi><mi 
->n</mi><mi 
->g</mi><mstyle 
-class="text"><mtext  >_</mtext></mstyle><mi 
->r</mi><mi 
->a</mi><mi 
->t</mi><mi 
->e</mi></mstyle></math>
+<!-- l. 179 --><p class='indent'>   Let’s compute now the buffering latency of a chunk (the chunk-time). If \(\mathtt {sampling\_rate}\)
 is the number of frames per second during the recording process, it holds
 that:
-</p>
-   <table class="equation"><tr><td>
-<!--l. 185--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="block" class="equation">
-       <mstyle 
-   id="x1-1055r1"  class="label" ></mstyle><!--endlabel--><mo 
-class="MathClass-open" stretchy="false"><mstyle mathvariant="monospace">minimal<mstyle 
-class="text"><mtext  >_</mtext></mstyle>buffering<mstyle 
-class="text"><mtext  >_</mtext></mstyle>latency</mstyle></mo> <mo 
-class="MathClass-rel">=</mo> <mstyle mathvariant="monospace"><mi 
->C</mi><mi 
->H</mi><mi 
->U</mi><mi 
->N</mi><mi 
->K</mi><mstyle 
-class="text"><mtext  >_</mtext></mstyle><mi 
->S</mi><mi 
->I</mi><mi 
->Z</mi><mi 
->E</mi></mstyle><mo 
-class="MathClass-bin">&#x2215;</mo><mstyle mathvariant="monospace"><mi 
->s</mi><mi 
->a</mi><mi 
->m</mi><mi 
->p</mi><mi 
->l</mi><mi 
->i</mi><mi 
->n</mi><mi 
->g</mi><mstyle 
-class="text"><mtext  >_</mtext></mstyle><mi 
->r</mi><mi 
->a</mi><mi 
->t</mi><mi 
->e</mi></mstyle>
-</math></td><td class="eq-no">&#x0028;1&#x0029;</td></tr></table>
-<!--l. 191--><p class="indent" >   Add these calculations to <span 
-class="ectt-1000">latency_vs_chunk_size.txt </span>using a third column
-&#x0028;remember to use TABs&#x0029;.
+</p><!-- l. 188 --><p class='indent'>   \begin {equation}  \mathtt {minimal\_buffering\_latency} = \mathtt {CHUNK\_SIZE} / \mathtt {sampling\_rate}  \end {equation}
+</p><!-- l. 191 --><p class='indent'>   Add these calculations to <span class='ectt-1000'>latency_vs_chunk_size.txt </span>using a third column
+(remember to use TABs).
                                                                   
 
                                                                   
 </p>
-   <pre class="verbatim" id="verbatim-2">
-#&#x00A0;CHUNK_SIZE&#x00A0;&#x00A0;&#x00A0;&#x00A0;real&#x00A0;&#x00A0;&#x00A0;&#x00A0;minimal
-:&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;:&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;:
+   <pre class='verbatim' id='verbatim-2'>
+# CHUNK_SIZE    real    minimal
+:               :       :
 </pre>
-<!--l. 196--><p class="nopar" >
-</p><!--l. 198--><p class="indent" >   Plot both latencies:
+<!-- l. 196 --><p class='nopar'>
+</p><!-- l. 198 --><p class='indent'>   Plot both latencies:
 </p>
-   <!--l. 200-->
-   <div class="lstlisting" id="listing-9"><span class="label"><a 
- id="x1-1056r1"></a></span><span 
-class="ectt-1000">echo</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x0022;</span><span 
-class="ectt-1000">set</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">terminal</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">pdf</span><span 
-class="ectt-1000">;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">set</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">output</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">latency_vs_chunk_size</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">pdf</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">set</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">xlabel</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">CHUNK</span><span 
-class="ectt-1000">&#x005C;</span><span 
-class="ectt-1000">_SIZE</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">frames</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">set</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">ylabel</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">Latency</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">seconds</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">set</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">key</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">left</span><span 
-class="ectt-1000">;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">plot</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">latency_vs_chunk_size</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">txt</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">using</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">1:2</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">title</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">Real</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">with</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">linespoints</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">latency_vs_chunk_size</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">txt</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">using</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">1:3</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">title</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">Minimal</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">with</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">linespoints</span><span 
-class="ectt-1000">&#x0022;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">|</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">gnuplot</span></div>
+   <!-- l. 200 -->
+   <div class='lstlisting' id='listing-9'><span class='label'><a id='x1-1055r1'></a></span><span style='color:#000000'><span class='ectt-1000'>echo</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>"</span></span><span style='color:#000000'><span class='ectt-1000'>set</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>terminal</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>pdf</span></span><span style='color:#000000'><span class='ectt-1000'>;</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>set</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>output</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>latency_vs_chunk_size</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>pdf</span></span><span style='color:#000000'><span class='tctt-1000'>'</span><span class='ectt-1000'>;</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>set</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>xlabel</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>CHUNK</span></span><span style='color:#000000'><span class='ectt-1000'>\</span></span><span style='color:#000000'><span class='ectt-1000'>_SIZE</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>frames</span></span><span style='color:#000000'><span class='ectt-1000'>)</span><span class='tctt-1000'>'</span><span class='ectt-1000'>;</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>set</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>ylabel</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>Latency</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>seconds</span></span><span style='color:#000000'><span class='ectt-1000'>)</span><span class='tctt-1000'>'</span><span class='ectt-1000'>;</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>set</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>key</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>left</span></span><span style='color:#000000'><span class='ectt-1000'>;</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>plot</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>latency_vs_chunk_size</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>txt</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>using</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>1:2</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>title</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>Real</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>with</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>linespoints</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>latency_vs_chunk_size</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>txt</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>using</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>1:3</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>title</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>Minimal</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>with</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>linespoints</span></span><span style='color:#000000'><span class='ectt-1000'>"</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>|</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>gnuplot</span></span></div>
    
-<!--l. 204--><p class="indent" >   Which seems to be the minimal practical &#x0028;real&#x0029; latency &#x0028;the latency obtained ideallly
-when <!--l. 205--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mstyle mathvariant="monospace"><mi 
->C</mi><mi 
->H</mi><mi 
->U</mi><mi 
->N</mi><mi 
->K</mi><mstyle 
-class="text"><mtext  >_</mtext></mstyle><mi 
->S</mi><mi 
->I</mi><mi 
->Z</mi><mi 
->E</mi></mstyle> <mo 
-class="MathClass-rel">=</mo> <mn>1</mn></math>
-... however, notice that depending on your computer, this chunk size can be too
-small, overwhelming the CPU&#x0029; in your computer? Justify your answers.
-<a 
- id="x1-1000doc"></a>
-</p><!--l. 210--><p class="noindent" >
+<!-- l. 204 --><p class='indent'>   Which seems to be the minimal practical (real) latency (the latency obtained
+ideallly when \(\mathtt {CHUNK\_SIZE}=1\) ... however, notice that depending on your computer, this chunk size
+can be too small, overwhelming the CPU) in your computer? Justify your answers.
+<a id='x1-1055rdoc'></a>
+</p><!-- l. 210 --><p class='noindent'>
 </p>
-   <h4 class="likesubsectionHead"><a 
- id="x1-2000"></a>Wiring the ADC and the DAC using an interruption handler</h4>
-   <!--l. 211--><div class="lstinputlisting">
-<a 
- id="x1-2001"></a>
-   <span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2002r1"></a></span><span 
-class="ecit-1000">#</span><span 
-class="ecit-1000">!/</span><span 
-class="ecit-1000">usr</span><span 
-class="ecit-1000">/</span><span 
-class="ecit-1000">bin</span><span 
-class="ecit-1000">/</span><span 
-class="ecit-1000">env</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">python3</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2003r2"></a></span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2004r3"></a></span><span 
-class="ecit-1000">#</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">https</span><span 
-class="ecit-1000">://</span><span 
-class="ecit-1000">python</span><span 
-class="ecit-1000">-</span><span 
-class="ecit-1000">sounddevice</span><span 
-class="ecit-1000">.</span><span 
-class="ecit-1000">readthedocs</span><span 
-class="ecit-1000">.</span><span 
-class="ecit-1000">io</span><span 
-class="ecit-1000">/</span><span 
-class="ecit-1000">en</span><span 
-class="ecit-1000">/0.3.13/</span><span 
-class="ecit-1000">_downloads</span><span 
-class="ecit-1000">/</span><span 
-class="ecit-1000">wire</span><span 
-class="ecit-1000">.</span><span 
-class="ecit-1000">py</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2005r4"></a></span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2006r5"></a></span><span 
-class="ecit-1000">&#x0022;&#x0022;&#x0022;</span><span 
-class="ecit-1000">Pass</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">input</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">directly</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">to</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">output</span><span 
-class="ecit-1000">.</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2007r6"></a></span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2008r7"></a></span><span 
-class="ecit-1000">See</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">https</span><span 
-class="ecit-1000">://</span><span 
-class="ecit-1000">www</span><span 
-class="ecit-1000">.</span><span 
-class="ecit-1000">assembla</span><span 
-class="ecit-1000">.</span><span 
-class="ecit-1000">com</span><span 
-class="ecit-1000">/</span><span 
-class="ecit-1000">spaces</span><span 
-class="ecit-1000">/</span><span 
-class="ecit-1000">portaudio</span><span 
-class="ecit-1000">/</span><span 
-class="ecit-1000">subversion</span><span 
-class="ecit-1000">/</span><span 
-class="ecit-1000">source</span><span 
-class="ecit-1000">/</span><span 
-class="ecit-1000">HEAD</span><span 
-class="ecit-1000">/</span><span 
-class="ecit-1000">portaudio</span><span 
-class="ecit-1000">/</span><span 
-class="ecit-1000">trunk</span><span 
-class="ecit-1000">/</span><span 
-class="ecit-1000">test</span><span 
-class="ecit-1000">/</span><span 
-class="ecit-1000">patest_wire</span><span 
-class="ecit-1000">.</span><span 
-class="ecit-1000">c</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2009r8"></a></span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2010r9"></a></span><span 
-class="ecit-1000">&#x0022;&#x0022;&#x0022;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2011r10"></a></span><span 
-class="ectt-1000">import</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">argparse</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2012r11"></a></span><span 
-class="ectt-1000">import</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">logging</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2013r12"></a></span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2014r13"></a></span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2015r14"></a></span><span 
-class="ectt-1000">def</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">int_or_str</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">text</span><span 
-class="ectt-1000">&#x0029;:</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2016r15"></a></span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">&#x0022;&#x0022;&#x0022;</span><span 
-class="ecit-1000">Helper</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">function</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">for</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">argument</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">parsing</span><span 
-class="ecit-1000">.</span><span 
-class="ecit-1000">&#x0022;&#x0022;&#x0022;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2017r16"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">try</span><span 
-class="ectt-1000">:</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2018r17"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">return</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">int</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">text</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2019r18"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">except</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">ValueError</span><span 
-class="ectt-1000">:</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2020r19"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">return</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">text</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2021r20"></a></span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2022r21"></a></span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2023r22"></a></span><span 
-class="ectt-1000">parser</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">argparse</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">ArgumentParser</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">description</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">__doc__</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2024r23"></a></span><span 
-class="ectt-1000">parser</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">add_argument</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">-</span><span 
-class="ectt-1000">i</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">--</span><span 
-class="ectt-1000">input</span><span 
-class="ectt-1000">-</span><span 
-class="ectt-1000">device</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">type</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">int_or_str</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2025r24"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">help</span><span 
-class="ectt-1000">=</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">input</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">device</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">ID</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">or</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">substring</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2026r25"></a></span><span 
-class="ectt-1000">parser</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">add_argument</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">-</span><span 
-class="ectt-1000">o</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">--</span><span 
-class="ectt-1000">output</span><span 
-class="ectt-1000">-</span><span 
-class="ectt-1000">device</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">type</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">int_or_str</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2027r26"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">help</span><span 
-class="ectt-1000">=</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">output</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">device</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">ID</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">or</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">substring</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2028r27"></a></span><span 
-class="ectt-1000">parser</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">add_argument</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">-</span><span 
-class="ectt-1000">c</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">--</span><span 
-class="ectt-1000">channels</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">type</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">int</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">default</span><span 
-class="ectt-1000">=2,</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2029r28"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">help</span><span 
-class="ectt-1000">=</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">number</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">of</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">channels</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2030r29"></a></span><span 
-class="ectt-1000">parser</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">add_argument</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">-</span><span 
-class="ectt-1000">t</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">--</span><span 
-class="ectt-1000">dtype</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">help</span><span 
-class="ectt-1000">=</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">audio</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">data</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">type</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2031r30"></a></span><span 
-class="ectt-1000">parser</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">add_argument</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">-</span><span 
-class="ectt-1000">s</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">--</span><span 
-class="ectt-1000">samplerate</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">type</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">float</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">help</span><span 
-class="ectt-1000">=</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">sampling</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">rate</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2032r31"></a></span><span 
-class="ectt-1000">parser</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">add_argument</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">-</span><span 
-class="ectt-1000">b</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">--</span><span 
-class="ectt-1000">blocksize</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">type</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">int</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">help</span><span 
-class="ectt-1000">=</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">block</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">size</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2033r32"></a></span><span 
-class="ectt-1000">parser</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">add_argument</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">-</span><span 
-class="ectt-1000">l</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">--</span><span 
-class="ectt-1000">latency</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">type</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">float</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">help</span><span 
-class="ectt-1000">=</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">latency</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">in</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">seconds</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2034r33"></a></span><span 
-class="ectt-1000">args</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">parser</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">parse_args</span><span 
-class="ectt-1000">&#x0028;&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2035r34"></a></span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2036r35"></a></span><span 
-class="ectt-1000">try</span><span 
-class="ectt-1000">:</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2037r36"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">import</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">sounddevice</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">as</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">sd</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2038r37"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">import</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">numpy</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">#</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">Make</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">sure</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">NumPy</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">is</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">loaded</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">before</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">it</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">is</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">used</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">in</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">the</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">callback</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2039r38"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">assert</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">numpy</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">#</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">avoid</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">&#x0022;</span><span 
-class="ecit-1000">imported</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">but</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">unused</span><span 
-class="ecit-1000">&#x0022;</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">message</span><span 
-class="ecit-1000">&#x00A0;</span><span 
-class="ecit-1000">&#x0028;</span><span 
-class="ecit-1000">W0611</span><span 
-class="ecit-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2040r39"></a></span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2041r40"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">def</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">callback</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">indata</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">outdata</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">frames</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">time</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">status</span><span 
-class="ectt-1000">&#x0029;:</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2042r41"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">if</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">status</span><span 
-class="ectt-1000">:</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2043r42"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">print</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">status</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2044r43"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">outdata</span><span 
-class="ectt-1000">&#x005B;:&#x005D;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">indata</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2045r44"></a></span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2046r45"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">print</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">&#x0022;</span><span 
-class="ectt-1000">blocksize</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">&#x0022;</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">args</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">blocksize</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2047r46"></a></span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2048r47"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">with</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">sd</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">Stream</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">device</span><span 
-class="ectt-1000">=&#x0028;</span><span 
-class="ectt-1000">args</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">input_device</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">args</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">output_device</span><span 
-class="ectt-1000">&#x0029;,</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2049r48"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">samplerate</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">args</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">samplerate</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">blocksize</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">args</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">blocksize</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2050r49"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">dtype</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">args</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">dtype</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">latency</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">args</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">latency</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2051r50"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">channels</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">args</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">channels</span><span 
-class="ectt-1000">,</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">callback</span><span 
-class="ectt-1000">=</span><span 
-class="ectt-1000">callback</span><span 
-class="ectt-1000">&#x0029;:</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2052r51"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">print</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">#</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">*</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">80&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2053r52"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">print</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">press</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">Return</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">to</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">quit</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2054r53"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">print</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">#</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">*</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">80&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2055r54"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">input</span><span 
-class="ectt-1000">&#x0028;&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2056r55"></a></span><span 
-class="ectt-1000">except</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">KeyboardInterrupt</span><span 
-class="ectt-1000">:</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2057r56"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">parser</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">exit</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x005C;</span><span 
-class="ectt-1000">nInterrupted</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">by</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">user</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x0029;</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2058r57"></a></span><span 
-class="ectt-1000">except</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">Exception</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">as</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">e</span><span 
-class="ectt-1000">:</span><span 
-class="ectt-1000">&#x00A0;</span><br /><span class="label"><a 
- id="x1-2059r58"></a></span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">parser</span><span 
-class="ectt-1000">.</span><span 
-class="ectt-1000">exit</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">type</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">e</span><span 
-class="ectt-1000">&#x0029;.</span><span 
-class="ectt-1000">__name__</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">+</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">:</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="tctt-1000">&#x0027;</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">+</span><span 
-class="ectt-1000">&#x00A0;</span><span 
-class="ectt-1000">str</span><span 
-class="ectt-1000">&#x0028;</span><span 
-class="ectt-1000">e</span><span 
-class="ectt-1000">&#x0029;&#x0029;</span>
+   <h4 class='likesubsectionHead'><a id='x1-2000'></a>Wiring the ADC and the DAC using an interruption handler</h4>
+   <!-- l. 211 --><div class='lstinputlisting'>
+<a id='x1-2001'></a>
+   <span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2002r1'></a></span><span style='color:#000000'><span class='ecit-1000'>#</span></span><span style='color:#000000'><span class='ecit-1000'>!/</span></span><span style='color:#000000'><span class='ecit-1000'>usr</span></span><span style='color:#000000'><span class='ecit-1000'>/</span></span><span style='color:#000000'><span class='ecit-1000'>bin</span></span><span style='color:#000000'><span class='ecit-1000'>/</span></span><span style='color:#000000'><span class='ecit-1000'>env</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>python3</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2003r2'></a></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2004r3'></a></span><span style='color:#000000'><span class='ecit-1000'>#</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>https</span></span><span style='color:#000000'><span class='ecit-1000'>://</span></span><span style='color:#000000'><span class='ecit-1000'>python</span></span><span style='color:#000000'><span class='ecit-1000'>-</span></span><span style='color:#000000'><span class='ecit-1000'>sounddevice</span></span><span style='color:#000000'><span class='ecit-1000'>.</span></span><span style='color:#000000'><span class='ecit-1000'>readthedocs</span></span><span style='color:#000000'><span class='ecit-1000'>.</span></span><span style='color:#000000'><span class='ecit-1000'>io</span></span><span style='color:#000000'><span class='ecit-1000'>/</span></span><span style='color:#000000'><span class='ecit-1000'>en</span></span><span style='color:#000000'><span class='ecit-1000'>/0.3.13/</span></span><span style='color:#000000'><span class='ecit-1000'>_downloads</span></span><span style='color:#000000'><span class='ecit-1000'>/</span></span><span style='color:#000000'><span class='ecit-1000'>wire</span></span><span style='color:#000000'><span class='ecit-1000'>.</span></span><span style='color:#000000'><span class='ecit-1000'>py</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2005r4'></a></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2006r5'></a></span><span style='color:#000000'><span class='ecit-1000'>"""</span></span><span style='color:#000000'><span class='ecit-1000'>Pass</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>input</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>directly</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>to</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>output</span></span><span style='color:#000000'><span class='ecit-1000'>.</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2007r6'></a></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2008r7'></a></span><span style='color:#000000'><span class='ecit-1000'>See</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>https</span></span><span style='color:#000000'><span class='ecit-1000'>://</span></span><span style='color:#000000'><span class='ecit-1000'>www</span></span><span style='color:#000000'><span class='ecit-1000'>.</span></span><span style='color:#000000'><span class='ecit-1000'>assembla</span></span><span style='color:#000000'><span class='ecit-1000'>.</span></span><span style='color:#000000'><span class='ecit-1000'>com</span></span><span style='color:#000000'><span class='ecit-1000'>/</span></span><span style='color:#000000'><span class='ecit-1000'>spaces</span></span><span style='color:#000000'><span class='ecit-1000'>/</span></span><span style='color:#000000'><span class='ecit-1000'>portaudio</span></span><span style='color:#000000'><span class='ecit-1000'>/</span></span><span style='color:#000000'><span class='ecit-1000'>subversion</span></span><span style='color:#000000'><span class='ecit-1000'>/</span></span><span style='color:#000000'><span class='ecit-1000'>source</span></span><span style='color:#000000'><span class='ecit-1000'>/</span></span><span style='color:#000000'><span class='ecit-1000'>HEAD</span></span><span style='color:#000000'><span class='ecit-1000'>/</span></span><span style='color:#000000'><span class='ecit-1000'>portaudio</span></span><span style='color:#000000'><span class='ecit-1000'>/</span></span><span style='color:#000000'><span class='ecit-1000'>trunk</span></span><span style='color:#000000'><span class='ecit-1000'>/</span></span><span style='color:#000000'><span class='ecit-1000'>test</span></span><span style='color:#000000'><span class='ecit-1000'>/</span></span><span style='color:#000000'><span class='ecit-1000'>patest_wire</span></span><span style='color:#000000'><span class='ecit-1000'>.</span></span><span style='color:#000000'><span class='ecit-1000'>c</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2009r8'></a></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2010r9'></a></span><span style='color:#000000'><span class='ecit-1000'>"""</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2011r10'></a></span><span style='color:#000000'><span class='ectt-1000'>import</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>argparse</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2012r11'></a></span><span style='color:#000000'><span class='ectt-1000'>import</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>logging</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2013r12'></a></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2014r13'></a></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2015r14'></a></span><span style='color:#000000'><span class='ectt-1000'>def</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>int_or_str</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>text</span></span><span style='color:#000000'><span class='ectt-1000'>):</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2016r15'></a></span><span class='ecit-1000'>    </span><span style='color:#000000'><span class='ecit-1000'>"""</span></span><span style='color:#000000'><span class='ecit-1000'>Helper</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>function</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>for</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>argument</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>parsing</span></span><span style='color:#000000'><span class='ecit-1000'>.</span></span><span style='color:#000000'><span class='ecit-1000'>"""</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2017r16'></a></span><span class='ectt-1000'>    </span><span style='color:#000000'><span class='ectt-1000'>try</span></span><span style='color:#000000'><span class='ectt-1000'>:</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2018r17'></a></span><span class='ectt-1000'>        </span><span style='color:#000000'><span class='ectt-1000'>return</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>int</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>text</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2019r18'></a></span><span class='ectt-1000'>    </span><span style='color:#000000'><span class='ectt-1000'>except</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>ValueError</span></span><span style='color:#000000'><span class='ectt-1000'>:</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2020r19'></a></span><span class='ectt-1000'>        </span><span style='color:#000000'><span class='ectt-1000'>return</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>text</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2021r20'></a></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2022r21'></a></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2023r22'></a></span><span style='color:#000000'><span class='ectt-1000'>parser</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>argparse</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>ArgumentParser</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>description</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'>__doc__</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2024r23'></a></span><span style='color:#000000'><span class='ectt-1000'>parser</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>add_argument</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>-</span></span><span style='color:#000000'><span class='ectt-1000'>i</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>--</span></span><span style='color:#000000'><span class='ectt-1000'>input</span></span><span style='color:#000000'><span class='ectt-1000'>-</span></span><span style='color:#000000'><span class='ectt-1000'>device</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>type</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'>int_or_str</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2025r24'></a></span><span class='ectt-1000'>                    </span><span style='color:#000000'><span class='ectt-1000'>help</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>input</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>device</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>ID</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>or</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>substring</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2026r25'></a></span><span style='color:#000000'><span class='ectt-1000'>parser</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>add_argument</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>-</span></span><span style='color:#000000'><span class='ectt-1000'>o</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>--</span></span><span style='color:#000000'><span class='ectt-1000'>output</span></span><span style='color:#000000'><span class='ectt-1000'>-</span></span><span style='color:#000000'><span class='ectt-1000'>device</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>type</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'>int_or_str</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2027r26'></a></span><span class='ectt-1000'>                    </span><span style='color:#000000'><span class='ectt-1000'>help</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>output</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>device</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>ID</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>or</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>substring</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2028r27'></a></span><span style='color:#000000'><span class='ectt-1000'>parser</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>add_argument</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>-</span></span><span style='color:#000000'><span class='ectt-1000'>c</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>--</span></span><span style='color:#000000'><span class='ectt-1000'>channels</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>type</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'>int</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>default</span></span><span style='color:#000000'><span class='ectt-1000'>=2,</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2029r28'></a></span><span class='ectt-1000'>                    </span><span style='color:#000000'><span class='ectt-1000'>help</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>number</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>of</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>channels</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2030r29'></a></span><span style='color:#000000'><span class='ectt-1000'>parser</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>add_argument</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>-</span></span><span style='color:#000000'><span class='ectt-1000'>t</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>--</span></span><span style='color:#000000'><span class='ectt-1000'>dtype</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>help</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>audio</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>data</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>type</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2031r30'></a></span><span style='color:#000000'><span class='ectt-1000'>parser</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>add_argument</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>-</span></span><span style='color:#000000'><span class='ectt-1000'>s</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>--</span></span><span style='color:#000000'><span class='ectt-1000'>samplerate</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>type</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'>float</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>help</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>sampling</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>rate</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2032r31'></a></span><span style='color:#000000'><span class='ectt-1000'>parser</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>add_argument</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>-</span></span><span style='color:#000000'><span class='ectt-1000'>b</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>--</span></span><span style='color:#000000'><span class='ectt-1000'>blocksize</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>type</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'>int</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>help</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>block</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>size</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2033r32'></a></span><span style='color:#000000'><span class='ectt-1000'>parser</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>add_argument</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>-</span></span><span style='color:#000000'><span class='ectt-1000'>l</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>--</span></span><span style='color:#000000'><span class='ectt-1000'>latency</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>type</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'>float</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>help</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>latency</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>in</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>seconds</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2034r33'></a></span><span style='color:#000000'><span class='ectt-1000'>args</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>parser</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>parse_args</span></span><span style='color:#000000'><span class='ectt-1000'>()</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2035r34'></a></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2036r35'></a></span><span style='color:#000000'><span class='ectt-1000'>try</span></span><span style='color:#000000'><span class='ectt-1000'>:</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2037r36'></a></span><span class='ectt-1000'>    </span><span style='color:#000000'><span class='ectt-1000'>import</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>sounddevice</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>as</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>sd</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2038r37'></a></span><span class='ectt-1000'>    </span><span style='color:#000000'><span class='ectt-1000'>import</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>numpy</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span class='ecit-1000'> </span><span style='color:#000000'><span class='ecit-1000'>#</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>Make</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>sure</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>NumPy</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>is</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>loaded</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>before</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>it</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>is</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>used</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>in</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>the</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>callback</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2039r38'></a></span><span class='ectt-1000'>    </span><span style='color:#000000'><span class='ectt-1000'>assert</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>numpy</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span class='ecit-1000'> </span><span style='color:#000000'><span class='ecit-1000'>#</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>avoid</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>"</span></span><span style='color:#000000'><span class='ecit-1000'>imported</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>but</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>unused</span></span><span style='color:#000000'><span class='ecit-1000'>"</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>message</span></span><span style='color:#000000'><span class='ecit-1000'> </span></span><span style='color:#000000'><span class='ecit-1000'>(</span></span><span style='color:#000000'><span class='ecit-1000'>W0611</span></span><span style='color:#000000'><span class='ecit-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2040r39'></a></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2041r40'></a></span><span class='ectt-1000'>    </span><span style='color:#000000'><span class='ectt-1000'>def</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>callback</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>indata</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>outdata</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>frames</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>time</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>status</span></span><span style='color:#000000'><span class='ectt-1000'>):</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2042r41'></a></span><span class='ectt-1000'>        </span><span style='color:#000000'><span class='ectt-1000'>if</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>status</span></span><span style='color:#000000'><span class='ectt-1000'>:</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2043r42'></a></span><span class='ectt-1000'>            </span><span style='color:#000000'><span class='ectt-1000'>print</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>status</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2044r43'></a></span><span class='ectt-1000'>        </span><span style='color:#000000'><span class='ectt-1000'>outdata</span></span><span style='color:#000000'><span class='ectt-1000'>[:]</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>indata</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2045r44'></a></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2046r45'></a></span><span class='ectt-1000'>    </span><span style='color:#000000'><span class='ectt-1000'>print</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>"</span></span><span style='color:#000000'><span class='ectt-1000'>blocksize</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'>"</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>args</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>blocksize</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2047r46'></a></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2048r47'></a></span><span class='ectt-1000'>    </span><span style='color:#000000'><span class='ectt-1000'>with</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>sd</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>Stream</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>device</span></span><span style='color:#000000'><span class='ectt-1000'>=(</span></span><span style='color:#000000'><span class='ectt-1000'>args</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>input_device</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>args</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>output_device</span></span><span style='color:#000000'><span class='ectt-1000'>),</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2049r48'></a></span><span class='ectt-1000'>                   </span><span style='color:#000000'><span class='ectt-1000'>samplerate</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'>args</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>samplerate</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>blocksize</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'>args</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>blocksize</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2050r49'></a></span><span class='ectt-1000'>                   </span><span style='color:#000000'><span class='ectt-1000'>dtype</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'>args</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>dtype</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>latency</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'>args</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>latency</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2051r50'></a></span><span class='ectt-1000'>                   </span><span style='color:#000000'><span class='ectt-1000'>channels</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'>args</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>channels</span></span><span style='color:#000000'><span class='ectt-1000'>,</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>callback</span></span><span style='color:#000000'><span class='ectt-1000'>=</span></span><span style='color:#000000'><span class='ectt-1000'>callback</span></span><span style='color:#000000'><span class='ectt-1000'>):</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2052r51'></a></span><span class='ectt-1000'>        </span><span style='color:#000000'><span class='ectt-1000'>print</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>#</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>*</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>80)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2053r52'></a></span><span class='ectt-1000'>        </span><span style='color:#000000'><span class='ectt-1000'>print</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>press</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>Return</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>to</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>quit</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2054r53'></a></span><span class='ectt-1000'>        </span><span style='color:#000000'><span class='ectt-1000'>print</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>#</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>*</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>80)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2055r54'></a></span><span class='ectt-1000'>        </span><span style='color:#000000'><span class='ectt-1000'>input</span></span><span style='color:#000000'><span class='ectt-1000'>()</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2056r55'></a></span><span style='color:#000000'><span class='ectt-1000'>except</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>KeyboardInterrupt</span></span><span style='color:#000000'><span class='ectt-1000'>:</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2057r56'></a></span><span class='ectt-1000'>    </span><span style='color:#000000'><span class='ectt-1000'>parser</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>exit</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>\</span></span><span style='color:#000000'><span class='ectt-1000'>nInterrupted</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>by</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>user</span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>)</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2058r57'></a></span><span style='color:#000000'><span class='ectt-1000'>except</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>Exception</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>as</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>e</span></span><span style='color:#000000'><span class='ectt-1000'>:</span></span><span class='ectt-1000'> </span><br /> 
+<span class='label'><a id='x1-2059r58'></a></span><span class='ectt-1000'>    </span><span style='color:#000000'><span class='ectt-1000'>parser</span></span><span style='color:#000000'><span class='ectt-1000'>.</span></span><span style='color:#000000'><span class='ectt-1000'>exit</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>type</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>e</span></span><span style='color:#000000'><span class='ectt-1000'>).</span></span><span style='color:#000000'><span class='ectt-1000'>__name__</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>+</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'>:</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='tctt-1000'>'</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>+</span></span><span style='color:#000000'><span class='ectt-1000'> </span></span><span style='color:#000000'><span class='ectt-1000'>str</span></span><span style='color:#000000'><span class='ectt-1000'>(</span></span><span style='color:#000000'><span class='ectt-1000'>e</span></span><span style='color:#000000'><span class='ectt-1000'>))</span></span>
    
    </div>
-<!--l. 213--><p class="noindent" >
+<!-- l. 213 --><p class='noindent'>
 </p>
-   <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
- id="x1-30001"></a>Resources</h3>
-   <div class="thebibliography">
-   <p class="bibitem" ><span class="biblabel">
- &#x005B;1&#x005D;<span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span><a 
- id="Xsounddevice"></a>M.&#x00A0;Walker. <a 
-href="https://python-sounddevice.readthedocs.io/en/latest/" >python-sounddevice</a>.
+   <h3 class='sectionHead'><span class='titlemark'>1   </span> <a id='x1-30001'></a>Resources</h3>
+   <div class='thebibliography'>
+   <p class='bibitem'><span class='biblabel'>
+ [1]<span class='bibsp'>   </span></span><a id='Xsounddevice'></a>M. Walker. <a href='https://python-sounddevice.readthedocs.io/en/latest/'>python-sounddevice</a>.
 </p>
    </div>
-<a 
- id="Q1-1-6"></a>
+<p><a id='Q1-1-6'></a></p>
     
-</body></html> 
-
-                                                                  
-
-
+</body> 
+</html>
