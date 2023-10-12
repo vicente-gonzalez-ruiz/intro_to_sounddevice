@@ -11,7 +11,7 @@ that provides bindings for the
 Let's see some examples of what sounddevice can do:
 
 \subsection*{Wiring the ADC and the DAC using a loop}
-\lstinputlisting[language=Python]{/home/vruiz/repos/intercom/test/sounddevice/wire5.py}
+\lstinputlisting[language=Python]{/home/vruiz/repos/InterCom/test/sounddevice/wire5.py}
 
 This module implements the algorithm:
 
@@ -70,13 +70,13 @@ The chunk size introduces some latency. If we want to measure it:
 \item First, we need the tools:
   \href{http://sox.sourceforge.net/}{SoX},
   \href{https://www.audacityteam.org/}{Audacity}, and
-  \href{https://raw.githubusercontent.com/Tecnologias-multimedia/intercom/master/test/sounddevice/plot_input.py}{plot\_input.py}:
+  \href{https://raw.githubusercontent.com/Tecnologias-multimedia/InterCom/master/test/sounddevice/plot_input.py}{plot\_input.py}:
   
   \begin{lstlisting}[language=Bash]
 sudo apt install sox
 sudo apt install audacity
 sudo apt install curl
-curl https://raw.githubusercontent.com/Tecnologias-multimedia/intercom/master/test/sounddevice/plot_input.py > plot_input.py
+curl https://raw.githubusercontent.com/Tecnologias-multimedia/InterCom/master/test/sounddevice/plot_input.py > plot_input.py
   \end{lstlisting}
   
 \item Run:
@@ -208,7 +208,7 @@ overwhelming the CPU) in your computer?  Justify your
 answers. \label{question}
 
 \subsection*{Wiring the ADC and the DAC using an interruption handler}
-\lstinputlisting[language=Python]{/home/vruiz/repos/intercom/test/sounddevice/wire.py}
+\lstinputlisting[language=Python]{/home/vruiz/repos/InterCom/test/sounddevice/wire.py}
 
 \section{Resources}
 
